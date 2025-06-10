@@ -68,8 +68,8 @@ public class BinaryPlayerSaveLoad : MonoSingleton<BinaryPlayerSaveLoad>
 
         // Player Save Data
         newData.health = stats.stats.health;
-        newData.healthCrystals = stats.stats.healthCrystals;
         newData.maxHealth = stats.stats.maxHealth;
+        newData.maxMagic = stats.stats.maxMagic;
         newData.armor = stats.stats.armor;
 
         newData.gold = stats.stats.gold;
@@ -77,6 +77,16 @@ public class BinaryPlayerSaveLoad : MonoSingleton<BinaryPlayerSaveLoad>
 
         newData.arrows = stats.stats.arrows;
         newData.maxArrows = stats.stats.maxArrows;
+
+        newData.healthCrystals = stats.stats.healthCrystals;
+        newData.magicCrystals = stats.stats.magicCrystals;
+
+        newData.soulHearts = stats.stats.soulHearts;
+        newData.soulHeartShards = stats.stats.soulHeartShards;
+        newData.dreamFragments = stats.stats.dreamFragments;
+        newData.dreamShards = stats.stats.dreamShards;
+        newData.dreamCrystals = stats.stats.dreamCrystals;
+
 
         // Unlocks
 
@@ -159,8 +169,8 @@ public class BinaryPlayerSaveLoad : MonoSingleton<BinaryPlayerSaveLoad>
         // Player Save Data
 
         stats.stats.health = loadedData.health;
-        stats.stats.healthCrystals = loadedData.healthCrystals;
         stats.stats.maxHealth = loadedData.maxHealth;
+        stats.stats.maxMagic = loadedData.maxMagic;
         stats.stats.armor = loadedData.armor;
 
         stats.stats.gold = loadedData.gold;
@@ -168,6 +178,15 @@ public class BinaryPlayerSaveLoad : MonoSingleton<BinaryPlayerSaveLoad>
 
         stats.stats.arrows = loadedData.arrows;
         stats.stats.maxArrows = loadedData.maxArrows;
+
+        stats.stats.healthCrystals = loadedData.healthCrystals;
+        stats.stats.magicCrystals = loadedData.magicCrystals;
+
+        stats.stats.soulHearts = loadedData.soulHearts;
+        stats.stats.soulHeartShards = loadedData.soulHeartShards;
+        stats.stats.dreamFragments = loadedData.dreamFragments;
+        stats.stats.dreamShards = loadedData.dreamShards;
+        stats.stats.dreamCrystals = loadedData.dreamCrystals;
 
         // Unlocks
 

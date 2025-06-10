@@ -5,8 +5,8 @@ public class PlayerData
 
     public float
         health,
-        healthCrystals,
         maxHealth,
+        maxMagic,
         armor;
 
     public int
@@ -16,4 +16,17 @@ public class PlayerData
     public int
         arrows,
         maxArrows;
+
+    public int
+        healthCrystals,
+        magicCrystals;
+
+    // Dream Stats //
+
+    public int
+        soulHearts,
+        soulHeartShards,
+        dreamFragments,
+        dreamShards,
+        dreamCrystals;
 }

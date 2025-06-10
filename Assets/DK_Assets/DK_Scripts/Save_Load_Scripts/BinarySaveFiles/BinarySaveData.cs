@@ -18,8 +18,8 @@ public class BinarySaveData
 
     public float
         health,
-        healthCrystals,
         maxHealth,
+        maxMagic,
         armor;
 
     public int
@@ -29,6 +29,19 @@ public class BinarySaveData
     public int
         arrows,
         maxArrows;
+
+    public int
+        healthCrystals,
+        magicCrystals;
+
+    // Dream Stats //
+
+    public int
+        soulHearts,
+        soulHeartShards,
+        dreamFragments,
+        dreamShards,
+        dreamCrystals;
 
     // ---------------------------------------------------------------
 

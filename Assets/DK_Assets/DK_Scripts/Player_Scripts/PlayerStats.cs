@@ -31,6 +31,17 @@ public class PlayerStats : MonoSingleton<PlayerStats>
         // Arrow Values
         stats.arrows = 0;
         stats.maxArrows = 0;
+
+        // Magic Values
+        stats.maxMagic = 100;
+        stats.magicCrystals = 0;
+
+        // Dream Values
+        stats.soulHearts = 1;
+        stats.soulHeartShards = 0;
+        stats.dreamFragments = 0;
+        stats.dreamShards = 0;
+        stats.dreamCrystals = 0;
     }
 
     // ------------------ Health Functions --------------------------
