@@ -12,9 +12,7 @@ public class DisplaySaveStats : MonoBehaviour
     Text _text;
 
     [SerializeField]
-    GameObject 
-        _playerNameCreator,
-        _portal;
+    GameObject _portal;
 
     private void Start()
     {
@@ -23,7 +21,6 @@ public class DisplaySaveStats : MonoBehaviour
         if (loadedData != null)
         {
             _text.text = "Save File #" + _saveFile + "\n" + loadedData.playerName;
-            _playerNameCreator.SetActive(false);
             _portal.SetActive(true);
         }
 
