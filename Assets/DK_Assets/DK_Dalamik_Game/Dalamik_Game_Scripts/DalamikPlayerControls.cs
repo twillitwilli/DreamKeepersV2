@@ -13,20 +13,17 @@ public class DalamikPlayerControls : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Roll not implemented, finger trigger to trigger it was removed");
+
         gameTrigger = GetComponent<BoxCollider>();
         gameTrigger.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Roll()
     {
-        IndexFingerTrigger fingerTrigger;
+        dalamikPlayer.roll = true;
 
-        if (other.gameObject.TryGetComponent<IndexFingerTrigger>(out fingerTrigger))
-        {
-            dalamikPlayer.roll = true;
-
-            gameTrigger.enabled = false;
-        }
+        gameTrigger.enabled = false;
     }
 
     public void ChangeTextDisplay(string newText)

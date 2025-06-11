@@ -1331,15 +1331,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    playerName: Test_Player
+    playerName: Wanderer
     health: 300
-    healthCrystals: 0
     maxHealth: 300
+    maxMagic: 0
     armor: 0
     gold: 0
     maxGold: 0
     arrows: 0
     maxArrows: 0
+    healthCrystals: 0
+    magicCrystals: 0
+    soulHearts: 0
+    soulHeartShards: 0
+    dreamFragments: 0
+    dreamShards: 0
+    dreamCrystals: 0
   _goldDisplay: {fileID: 6210633184546569752}
 --- !u!1 &8555210798853139497
 GameObject:
