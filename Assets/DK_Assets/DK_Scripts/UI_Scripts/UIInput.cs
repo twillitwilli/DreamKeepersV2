@@ -26,6 +26,9 @@ public class UIIinput : MonoBehaviour
         _toggleObjectsOff,
         _toggleObjectsOn;
 
+    [SerializeField]
+    MeshRenderer _renderer;
+
     public void InputKey()
     {
         switch (inputType)
@@ -64,5 +67,17 @@ public class UIIinput : MonoBehaviour
 
                 break;
         }
+    }
+
+    public void HighLightInput()
+    {
+        if (_renderer != null)
+            _renderer.enabled = true;
+    }
+
+    public void DeselectInput()
+    {
+        if (_renderer != null)
+            _renderer.enabled = false;
     }
 }
