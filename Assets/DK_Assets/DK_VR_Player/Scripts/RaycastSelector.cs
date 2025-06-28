@@ -21,7 +21,6 @@ public class RaycastSelector : MonoBehaviour
         // shoots ray cast
         if (Physics.Raycast(transform.position, forward, out hit, 5, -_ignoreLayers))
         {
-
             // new input variable
             UIIinput newInput;
 

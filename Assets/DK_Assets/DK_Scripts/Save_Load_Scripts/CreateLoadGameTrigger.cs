@@ -7,15 +7,9 @@ public class CreateLoadGameTrigger : MonoBehaviour
     [SerializeField]
     int _saveFile;
 
-    MeshRenderer _renderer;
-
     [SerializeField]
-    Material _portalSaveDeletedMat;
+    GameObject _parentObject;
 
-    private void Start()
-    {
-        _renderer = GetComponent<MeshRenderer>();
-    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -24,7 +18,7 @@ public class CreateLoadGameTrigger : MonoBehaviour
         if (other.gameObject.TryGetComponent<DeleteSaveFile>(out skullDeleter))
         {
             BinarySaveSystem.DeleteFileSave(_saveFile);
-            _renderer.material = _portalSaveDeletedMat;
+            _parentObject.SetActive(false);
         }
 
         PlayerController player;
