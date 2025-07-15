@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class SwordTrigger : MonoBehaviour
 {
     [SerializeField]
-    float _attackPower;
+    Sword _sword;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,6 +19,13 @@ public class SwordTrigger : MonoBehaviour
 
         // else if sword hits enemy
         else if (other.gameObject.TryGetComponent<DKEnemyController>(out enemy))
-            enemy.Hit(_attackPower, PlayerController.Instance.transform.position);
+        {
+            // checks to see if the player landed a critical hit
+            float attackDamage = _sword.CriticalHit(_sword.currentAttackDamage);
+
+            // applies damage to enemy
+            enemy.Hit(_sword.currentAttackDamage, PlayerController.Instance.transform.position);
+        }
+            
     }
 }

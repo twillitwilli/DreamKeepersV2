@@ -5,9 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Interactable))]
+[RequireComponent (typeof(NPCController))]
+[RequireComponent (typeof(DialogueOptions))]
 public class TalkToNPC : MonoBehaviour
 {
     NPCController _npc;
+    DialogueOptions _dialogueOptions;
 
     public enum DialogueType
     {
@@ -22,9 +25,6 @@ public class TalkToNPC : MonoBehaviour
     public DialogueType currentTypeOfDialogue;
 
     [SerializeField]
-    DialogueOptions _dialogueOptions;
-
-    [SerializeField]
     GameObject _chatBubble;
 
     [SerializeField]
@@ -36,6 +36,7 @@ public class TalkToNPC : MonoBehaviour
     private void Awake()
     {
         _npc = GetComponent<NPCController>();
+        _dialogueOptions = GetComponent<DialogueOptions>();
     }
 
     public async void Talk()

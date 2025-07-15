@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnableOnDestroy : MonoBehaviour
+namespace SoT.Classes
 {
-    [SerializeField]
-    GameObject[] _objectsToEnable;
-
-    private void OnDestroy()
+    public class EnableOnDestroy : MonoBehaviour
     {
-        foreach (GameObject obj in _objectsToEnable)
-            obj.SetActive(true);
+        [SerializeField]
+        GameObject[] _objectsToEnable;
+
+        private void OnDestroy()
+        {
+            foreach (GameObject obj in _objectsToEnable)
+                obj.SetActive(true);
+        }
     }
 }

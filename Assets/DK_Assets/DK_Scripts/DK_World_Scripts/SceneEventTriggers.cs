@@ -5,5 +5,7 @@ using SoT.AbstractClasses;
 
 public class SceneEventTriggers : MonoSingleton<SceneEventTriggers>
 {
-    public List<EventTriggerData> eventTriggers;
+    public EventTriggerData[] eventTriggers;
+
+    public bool[] completedEvents;
 }

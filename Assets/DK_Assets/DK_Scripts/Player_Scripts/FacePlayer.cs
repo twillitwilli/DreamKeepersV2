@@ -24,14 +24,24 @@ public class FacePlayer : MonoBehaviour
 
     void Update()
     {
-        _target = _player.head;
+        // if target isnt set to player head, sets it to player head
+        if (_target != _player.head)
+            _target = _player.head;
+
+        // sets the direction to look
         Vector3 direction = (_target.position - transform.position).normalized;
+
+        // sets the rotation
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+
+        // rotates the object based on the rotation speed
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
+        // locks position of object
         if (lockPosition)
             transform.localPosition = position;
 
+        // locks rotational axis of object
         if (lockRotationAxis)
         {
             _newRotation = transform.localEulerAngles;

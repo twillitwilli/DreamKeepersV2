@@ -23,6 +23,8 @@ public sealed class VRHandController : MonoBehaviour
 
     public bool trackHandVelocity { get; set; }
 
+    List<Vector3> _localHandTrackingPos = new List<Vector3>();
+
     public GameObject DalamikGameControls;
 
     // ---------------- Throwable Variables -----------------
@@ -32,9 +34,7 @@ public sealed class VRHandController : MonoBehaviour
 
     public Transform _throwableHeld;
 
-    public List<Vector3> _handTrackingPos = new List<Vector3>();
-
-    public float throwVelocity = 1000f;
+    public float throwVelocity = 10f;
 
     public GameObject currentGrabable { get; private set; }
     Rigidbody _currentGrabableRB;
@@ -67,12 +67,7 @@ public sealed class VRHandController : MonoBehaviour
     {
         // Tracks last 15 positions of the hand, if is holding something
         if (trackHandVelocity)
-        {
-            if (_handTrackingPos.Count > 15)
-                _handTrackingPos.RemoveAt(0);
-
-            _handTrackingPos.Add(transform.position);
-        }
+            TrackHandLocalPosition();
     }
 
     void LateUpdate()
@@ -209,11 +204,10 @@ public sealed class VRHandController : MonoBehaviour
         _currentGrabableRB.isKinematic = false;
 
         // Get direction & add force to the object being thrown
-        Vector3 direction = _handTrackingPos[_handTrackingPos.Count - 1] - _handTrackingPos[0];
-        _currentGrabableRB.AddForce(direction * throwVelocity);
+        _currentGrabableRB.AddForce(GetHandDirection() * throwVelocity);
 
         //Get throwable velocity
-        _currentThrowable.throwableVelocity = Vector3.Magnitude(direction * throwVelocity);
+        _currentThrowable.throwableVelocity = GetHandVelocity() * throwVelocity;
         Debug.Log("Throwable velocity = " + _currentThrowable.throwableVelocity);
 
         // Reset RB settings
@@ -349,25 +343,65 @@ public sealed class VRHandController : MonoBehaviour
         currentEquippedItem = null;
     }
 
+    void TrackHandLocalPosition()
+    {
+        if (_localHandTrackingPos.Count > 15)
+            _localHandTrackingPos.RemoveAt(0);
+
+        // gets hand local position, so body movement wont get calculated into the hands tracking,
+        // then adds that vector3 position to the hand tracking position list
+        _localHandTrackingPos.Add(_playerController.transform.InverseTransformPoint(transform.position));
+    }
+
+    // -------------------- ChatGPT Assisted Math ----------------------
+
+    public Vector3 GetHandDirection()
+    {
+        // checks to make sure the list has been populated first
+        if (_localHandTrackingPos.Count < 2)
+            return Vector3.zero;
+
+        return (_localHandTrackingPos[_localHandTrackingPos.Count - 1] - _localHandTrackingPos[0]).normalized;
+    }
+
     public float GetHandVelocity()
     {
-        // Checks to see if hand tracking positions exist
-        if (_handTrackingPos.Count < 0)
-        {
-            // Get direction of hand movement
-            Vector3 direction = _handTrackingPos[_handTrackingPos.Count - 1] - _handTrackingPos[0];
+        // checks to make sure the list has been populated first
+        if (_localHandTrackingPos.Count < 2)
+            return Vector3.zero.x;
 
-            Debug.Log("Hand Velocity = " + Vector3.Magnitude(direction * 2000));
+        Vector3 delta = _localHandTrackingPos[_localHandTrackingPos.Count - 1] - _localHandTrackingPos[0];
+        float time = Time.deltaTime * (_localHandTrackingPos.Count - 1);
 
-            //Hand Velocity
-            return Vector3.Magnitude(direction * 2000);
-        }
+        // Will print hand velocity
+        //Debug.Log("Tracked Hand Velocity = " + Mathf.RoundToInt(delta.magnitude / time));
 
-        else
-        {
-            Debug.Log("No hand movement found");
-            return 0;
-        }
-            
+        // takes the magnitude of the hand positions, divides them by time taken to move,
+        // then rounds the result to an int for easier readability
+        return Mathf.RoundToInt(delta.magnitude / time);
     }
+
+    // -------------------------------------------------------------------
+
+    //public float GetHandVelocity()
+    //{
+    //    // Checks to see if hand tracking positions exist
+    //    if (_handTrackingPos.Count < 0)
+    //    {
+    //        // Get direction of hand movement
+    //        Vector3 direction = _handTrackingPos[_handTrackingPos.Count - 1] - _handTrackingPos[0];
+
+    //        Debug.Log("Hand Velocity = " + Vector3.Magnitude(direction * 2000));
+
+    //        //Hand Velocity
+    //        return Vector3.Magnitude(direction * 2000);
+    //    }
+
+    //    else
+    //    {
+    //        Debug.Log("No hand movement found");
+    //        return 0;
+    //    }
+            
+    //}
 }

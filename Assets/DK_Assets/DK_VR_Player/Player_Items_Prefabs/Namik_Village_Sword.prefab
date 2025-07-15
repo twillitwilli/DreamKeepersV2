@@ -159,7 +159,11 @@ MonoBehaviour:
   _swordTrigger: {fileID: 6405027455767814742}
   _swingEffect: {fileID: 5202948683720667842}
   _coverEffect: {fileID: 6688243009358478821}
-  handTrackingPositions: []
+  minimumDamage: 8
+  maximumDamage: 14
+  critRate: 25
+  critDamagemultiplyer: 1
+  currentAttackDamage: 0
 --- !u!1 &2912953171539008526
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8412dedceef1f4ebcb5c3de18f86de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPower: 8
+  _sword: {fileID: 7555178339079833510}
 --- !u!1 &5202948683720667842
 GameObject:
   m_ObjectHideFlags: 0

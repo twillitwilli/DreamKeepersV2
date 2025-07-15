@@ -13,9 +13,19 @@ public class Sword : MonoBehaviour
         _swingEffect,
         _coverEffect;
 
-    public VRHandController currentHand { get; set; }
+    public int
+        minimumDamage,
+        maximumDamage;
 
-    public List<Vector3> handTrackingPositions = new List<Vector3>();
+    [Range(5f, 75f)]
+    public int critRate;
+    [Range(.25f, 3)]
+    public float critDamagemultipler;
+
+    [HideInInspector]
+    public float currentAttackDamage;
+
+    public VRHandController currentHand { get; set; }
 
     private async void Update()
     {
@@ -27,16 +37,18 @@ public class Sword : MonoBehaviour
             // tracking hand velocity
             else
             {
-                handTrackingPositions = currentHand._handTrackingPos;
+                float swordVelocity = currentHand.GetHandVelocity();
 
-                Vector3 direction = handTrackingPositions[handTrackingPositions.Count - 1] - handTrackingPositions[0];
+                // limits max sword velocity to avoid exploit
+                if (swordVelocity > 15)
+                    swordVelocity = 15;
 
-                float swordVelocity = Vector3.Magnitude(direction * 2000);
-
-                Debug.Log("sword velocity = " + swordVelocity);
-
-                if (swordVelocity > 1000)
+                // Activate sword trigger and get current damage amount
+                if (swordVelocity > 7)
                 {
+                    currentAttackDamage = (Random.Range(minimumDamage, maximumDamage)) * swordVelocity;
+                    Debug.Log("Strong Attack Damage " + currentAttackDamage);
+
                     // Sword Swing Attack
                     _swordTrigger.isTrigger = true;
 
@@ -44,13 +56,17 @@ public class Sword : MonoBehaviour
                     _swingEffect.SetActive(true);
                 }
 
+                else if (swordVelocity > 5 && swordVelocity < 8)
+                    Debug.Log("Swing Faster");
+
+                // Not Attacking
                 else if (_swordTrigger.isTrigger)
                 {
                     // Turn off Sword Swing Attack
                     _swordTrigger.isTrigger = false;
 
                     // wait half a second
-                    await Task.Delay(500);
+                    await Task.Delay(1000);
 
                     // turn off swing effect
                     _swingEffect.SetActive(false);
@@ -62,5 +78,19 @@ public class Sword : MonoBehaviour
     public void TurnOnCoverEffect()
     {
         _coverEffect.SetActive(true);
+    }
+
+    public float CriticalHit(float currentAttackDamage)
+    {
+        // randomly checks to see if you landed a crit
+        int critHit = Random.Range(critRate, 100);
+
+        Debug.Log("CRITICAL HIT Damage " + (currentAttackDamage += Mathf.RoundToInt(currentAttackDamage * critDamagemultipler)));
+
+        // if crit hits, then current attack will be multiplied by crit damage modifer
+        if (critHit <= critRate)
+            currentAttackDamage += Mathf.RoundToInt(currentAttackDamage * critDamagemultipler);
+
+        return currentAttackDamage;
     }
 }
